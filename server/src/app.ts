@@ -1,17 +1,14 @@
 import Express from "express";
 import cors from "cors";
+import routerFlashcards from "./routes/flashcards";
 
 const app = Express();
 
+// middlewares
 app.use(Express.json());
 app.use(cors());
 
-//rotas
-
-//rota check
-
-app.get("/api", (req, res) => {
-    res.json({ message: "API todo list" })
-});
+// rotas
+app.use(routerFlashcards);
 
 export default app;

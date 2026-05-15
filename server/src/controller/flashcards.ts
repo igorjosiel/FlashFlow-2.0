@@ -69,4 +69,26 @@ export default class FlashcardController {
             return res.status(500).json({ message: "Erro ao criar a tarefa" });
         }
     }
+
+    async delete(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+
+            const flashcardExists = await prisma.flashcard.findUnique({
+                where: { id: Number(id) }
+            });
+
+            if (!flashcardExists) {
+                return res.status(404).json({ message: "Flashcard não encontrado." });
+            }
+
+            await prisma.flashcard.delete({
+                where: { id: Number(id) }
+            });
+
+            return res.status(204).send();
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao criar a tarefa" });
+        }
+    }
 }

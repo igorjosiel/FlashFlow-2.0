@@ -11,4 +11,28 @@ export default class FlashcardController {
             return res.status(500).json({ message: "Erro ao listar tarefas" });
         }
     }
+
+    async create(req: Request, res: Response) {
+        try {
+            const { question, answer, category } = req.body;
+
+            if (!question || !answer || !category) {
+                return res.status(400).json({
+                    message: "Os campos pergunta, resposta e categoria do flashcard são obrigatórios."
+                });
+            }
+
+            const flashcard = await prisma.flashcard.create({
+                data: {
+                    question,
+                    answer,
+                    category,
+                }
+            });
+
+            return res.status(201).json(flashcard);
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao criar a tarefa" });
+        }
+    }
 }

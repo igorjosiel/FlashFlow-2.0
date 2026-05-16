@@ -1,13 +1,13 @@
 import { Router } from "express";
 import FlashcardController from "../controller/flashcards";
 
-const routerFlashcards = Router();
+const flashcardsRouter = Router();
 
 const flashcardController = new FlashcardController();
 
-routerFlashcards.get("/flashcards", (req, res) => flashcardController.getAll(req, res));
-routerFlashcards.post("/flashcards", (req, res) => flashcardController.create(req, res));
-routerFlashcards.put("/flashcards/:id", (req, res) => flashcardController.update(req, res));
-routerFlashcards.delete("/flashcards/:id", (req, res) => flashcardController.delete(req, res));
+flashcardsRouter.get("/flashcards", (req, res) => flashcardController.getAll(req, res));
+flashcardsRouter.post("/flashcards", (req, res) => flashcardController.create(req, res));
+flashcardsRouter.put("/flashcards/:id", (req, res) => flashcardController.update(req, res));
+flashcardsRouter.delete("/flashcards/:id", (req, res) => flashcardController.delete(req, res));
 
-export default routerFlashcards;
+export default flashcardsRouter;

@@ -4,30 +4,33 @@ import FlashcardsEmptyState from "../FlashcardsEmptyState";
 import { getFlashcards } from '../../services/flashcards';
 import type { Flashcard } from "../../types/flashcard";
 
-function FlashcardsSection() {
+export interface IFlashcardsSection {
+    selectedCategory: string;
+}
+
+function FlashcardsSection({ selectedCategory }: IFlashcardsSection) {
     const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState('');
 
     useEffect(() => {
         async function fetchFlashcards() {
             try {
-                const response = await getFlashcards();
+                const response = await getFlashcards(selectedCategory);
 
                 setFlashcards(response.data.flashcards);
             } catch (err) {
-                setError('Erro ao buscar os flashcards');
-            } finally {
-                setIsLoading(false);
+                console.log('Erro ao buscar os flashcards');
             }
         }
 
         fetchFlashcards();
-    }, []);
+    }, [selectedCategory]);
 
     return (
         <section className="mt-24">
-            {flashcards.length > 0 ? <FlashcardsContent flashcards={flashcards} /> : <FlashcardsEmptyState />}
+            {flashcards.length > 0 ? 
+                <FlashcardsContent flashcards={flashcards} /> :
+                <FlashcardsEmptyState />
+            }
         </section>
     );
 }

@@ -75,6 +75,13 @@ export default class FlashcardController {
             const { id } = req.params;
             const { question, answer, category } = req.body;
 
+            if (!allowedCategories.includes(category)) {
+                return res.status(400).json({
+                    message: "Categoria inválida.",
+                    allowedCategories
+                });
+            }
+
             await this.verifyFlashcardAlreadyExists(Number(id), res);
 
             const updatedFlashcard = await prisma.flashcard.update({

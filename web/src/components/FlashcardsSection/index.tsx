@@ -10,6 +10,8 @@ export interface IFlashcardsSection {
 
 function FlashcardsSection({ selectedCategory }: IFlashcardsSection) {
     const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
+    // Estado utilizado para renderizar novamente o componente atualizado dos flashcards
+    const [handleDataOperation, setHandleDataOperation] = useState<"add" | "update" | "delete" | "">("");
 
     useEffect(() => {
         async function fetchFlashcards() {
@@ -23,12 +25,12 @@ function FlashcardsSection({ selectedCategory }: IFlashcardsSection) {
         }
 
         fetchFlashcards();
-    }, [selectedCategory]);
+    }, [selectedCategory, handleDataOperation]);
 
     return (
         <section className="mt-24">
             {flashcards.length > 0 ? 
-                <FlashcardsContent flashcards={flashcards} /> :
+                <FlashcardsContent flashcards={flashcards} setHandleDataOperation={setHandleDataOperation} /> :
                 <FlashcardsEmptyState />
             }
         </section>

@@ -1,13 +1,27 @@
 import { api } from './api';
 
 export async function getFlashcards(selectedCategory: string) {
-  if (selectedCategory) {
-    const response = await api.get(`/flashcards?category=${selectedCategory}`);
+  try {
+    if (selectedCategory) {
+      const response = await api.get(`/flashcards?category=${selectedCategory}`);
+
+      return response.data;
+    }
+    
+    const response = await api.get(`/flashcards`);
 
     return response.data;
+  } catch (error) {
+    console.log("Error", error);
   }
-  
-  const response = await api.get(`/flashcards`);
+}
 
-  return response.data;
+export async function deleteFlashcard(flashcardId: number){
+  try {
+    await api.delete(`/flashcards/${flashcardId}`);
+
+    return;
+  } catch (error) {
+    console.log("Error", error);
+  }
 }

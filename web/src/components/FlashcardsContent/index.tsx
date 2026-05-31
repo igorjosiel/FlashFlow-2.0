@@ -3,13 +3,16 @@ import { BiRefresh, BiPencil } from "react-icons/bi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import type { Flashcard } from "../../types/flashcard";
+import DeleteFlashCardModal from "../DeleteFlashcardModal";
 
 interface IFlashcardsContent {
     flashcards: Flashcard[] | [];
+    setHandleDataOperation: (operation: "add" | "update" | "delete" | "") => void;
 }
 
-function FlashcardsContent({ flashcards }: IFlashcardsContent) {
+function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsContent) {
     const [flippedId, setFlippedId] = useState<number | null>(null);
+    const [isOpenDeleteFlashcardModal, setIsOpenDeleteFlashcardModal] = useState<boolean>(false);
 
     const handleFlipCard = (id: number) => {
         setFlippedId((currentId) => (
@@ -42,7 +45,19 @@ function FlashcardsContent({ flashcards }: IFlashcardsContent) {
                             <BiPencil size={18} className="cursor-pointer" />
                         </div>
                         <div className="p-2">
-                            <FaRegTrashCan size={16} color="#9E3F4E" className="cursor-pointer" />
+                            <FaRegTrashCan
+                                size={16}
+                                color="#9E3F4E"
+                                className="cursor-pointer"
+                                onClick={() => setIsOpenDeleteFlashcardModal(true)}
+                            />
+
+                            <DeleteFlashCardModal
+                                isOpen={isOpenDeleteFlashcardModal}
+                                closeDeleteFlashcardModal={() => setIsOpenDeleteFlashcardModal(false)}
+                                flashcardId={id}
+                                setHandleDataOperation={setHandleDataOperation}
+                            />
                         </div>
                     </div>
                 </div>

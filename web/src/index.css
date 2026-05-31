@@ -15,6 +15,9 @@
     --color-surface-light-500: #E1E9EE;
     --color-surface-light-600: #A9B4B9;
     --color-surface-light-700: #D9E4EA;
+    --color-wine-red: #9E3F4E;
+    --color-wine-red-light: #FF8B9A33;
+    --color-white: #FFFFFF;
 
     /* Fonts */
     --font-manrope: "Manrope", sans-serif;

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import FlashcardController from "../controller/Flashcards";
+import FlashcardController from "../controllers/Flashcards";
 import validateRequiredFieldsFlashcards from "../middlewares/ValidateRequiredFieldsFlashcards";
 
 const flashcardsRouter = Router();

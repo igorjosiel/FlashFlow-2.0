@@ -1,7 +1,7 @@
 import Express from "express";
 import cors from "cors";
-import flashcardsRouter from "./routes/flashcards";
-import categoriesRouter from "./routes/categories";
+import flashcardsRouter from "./routes/Flashcards";
+import categoriesRouter from "./routes/Categories";
 
 const app = Express();
 

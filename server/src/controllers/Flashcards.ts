@@ -18,7 +18,7 @@ export default class FlashcardController {
             return apiResponse({
                 res,
                 success: true,
-                message: flashcards.length > 0 ? "Flashcards retornados com sucesso." : "Nenhum flashcard cadastrado.",
+                message: flashcards.length > 0 ? "Flashcards retornados com sucesso." : "Nenhum flashcard encontrado.",
                 data: { flashcards }
             });
         } catch (error) {}

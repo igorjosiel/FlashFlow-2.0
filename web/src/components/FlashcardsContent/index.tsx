@@ -13,7 +13,8 @@ interface IFlashcardsContent {
 
 function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsContent) {
     const [flippedId, setFlippedId] = useState<number | null>(null);
-    const [isOpenAddEditFlashcardModal, setIsOpenAddEditFlashcardModal] = useState<boolean>(false);
+    const [isOpenAddFlashcardModal, setIsOpenAddFlashcardModal] = useState<boolean>(false);
+    const [isOpenEditFlashcardModal, setIsOpenEditFlashcardModal] = useState<boolean>(false);
     const [isOpenDeleteFlashcardModal, setIsOpenDeleteFlashcardModal] = useState<boolean>(false);
 
     const handleFlipCard = (id: number) => {
@@ -22,8 +23,9 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
         ));
     }
 
-    const cardHeader = (id: number, category: string): ReactNode => {
-        const isFlipped = flippedId === id;
+    const cardHeader = (flashcard: Flashcard): ReactNode => {
+        const { id, category } = flashcard;
+        const isFlipped = flippedId === Number(id);
 
         if (!isFlipped) {
             return (
@@ -44,8 +46,21 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
 
                     <div className="flex gap-1">
                         <div className="p-2">
-                            <BiPencil size={18} className="cursor-pointer" />
+                            <BiPencil
+                                size={18}
+                                className="cursor-pointer"
+                                onClick={() => setIsOpenEditFlashcardModal(true)}
+                            />
+
+                            <AddEditFlashcardModal
+                                isOpen={isOpenEditFlashcardModal}
+                                closeAddEditFlashcardModal={() => setIsOpenEditFlashcardModal(false)}
+                                operation="edit"
+                                setHandleDataOperation={setHandleDataOperation}
+                                flashcard={flashcard}
+                            />
                         </div>
+
                         <div className="p-2">
                             <FaRegTrashCan
                                 size={16}
@@ -57,7 +72,7 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
                             <DeleteFlashCardModal
                                 isOpen={isOpenDeleteFlashcardModal}
                                 closeDeleteFlashcardModal={() => setIsOpenDeleteFlashcardModal(false)}
-                                flashcardId={id}
+                                flashcardId={Number(id)}
                                 setHandleDataOperation={setHandleDataOperation}
                             />
                         </div>
@@ -84,7 +99,9 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
                     <h2 className="font-inter font-normal text-[14px] leading-5 text-surface-light-400 text-center mb-2">
                         {question}
                     </h2>
-                    <p className="font-manrope font-semibold text-base leading-5 text-primary-color">{answer}</p>
+                    <p className="font-manrope font-semibold text-base leading-5 text-primary-color">
+                        {answer}
+                    </p>
                 </div>
             );
         }
@@ -98,7 +115,7 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
                     <FaPlus
                         size={30}
                         color="#566166"
-                        onClick={() => setIsOpenAddEditFlashcardModal(true)}
+                        onClick={() => setIsOpenAddFlashcardModal(true)}
                     />
                 </div>
 
@@ -108,8 +125,8 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
                 </p>
 
                 <AddEditFlashcardModal
-                    isOpen={isOpenAddEditFlashcardModal}
-                    closeAddEditFlashcardModal={() => setIsOpenAddEditFlashcardModal(false)}
+                    isOpen={isOpenAddFlashcardModal}
+                    closeAddEditFlashcardModal={() => setIsOpenAddFlashcardModal(false)}
                     operation="add"
                     setHandleDataOperation={setHandleDataOperation}
                 />
@@ -122,7 +139,7 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
             {flashcards.map(flashcard => {
                 return (
                     <li key={flashcard.id} className="bg-white max-h-80 flex flex-col rounded-2xl p-8 shadow-[0px_10px_30px_0px_rgba(42,52,57,0.12)]">
-                        {cardHeader(Number(flashcard.id), flashcard.category)}
+                        {cardHeader(flashcard)}
                         {cardContent(Number(flashcard.id), flashcard.question, flashcard.answer)}
 
                         <button className="bg-surface-light-500 p-4 h-11 w-11 rounded-full relative ml-auto cursor-pointer"

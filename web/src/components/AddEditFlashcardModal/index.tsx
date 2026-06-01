@@ -3,20 +3,23 @@ import Select, { type SelectOption } from "../Select";
 import Label from "../Label";
 import { getCategories } from "../../services/categories";
 import Textarea from "../Textarea";
-import { createFlashcard } from "../../services/flashcards";
+import { createFlashcard, updateFlashcard } from "../../services/flashcards";
+import type { Flashcard } from "../../types/flashcard";
 
 interface IAddEditFlashcardModal {
     isOpen: boolean;
     closeAddEditFlashcardModal: () => void;
     operation: "add" | "edit";
     setHandleDataOperation: (operation: "add" | "update" | "delete" | "") => void;
+    flashcard?: Flashcard;
 };
 
 const AddEditFlashcardModal = ({
     isOpen,
     closeAddEditFlashcardModal,
     operation,
-    setHandleDataOperation
+    setHandleDataOperation,
+    flashcard
 }:IAddEditFlashcardModal) => {
     const [categories, setCategories] = useState<SelectOption[] | []>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -41,8 +44,21 @@ const AddEditFlashcardModal = ({
             }
         }
 
+        if (flashcard) {
+            setSelectedCategory(flashcard.category);
+            setQuestion(flashcard.question);
+            setAnswer(flashcard.answer);
+        }
+
         fetchCategories();
     }, []);
+
+    const clearAddEditFlashcardModal = () => {
+        setQuestion("");
+        setAnswer("");
+        setSelectedCategory("");
+        closeAddEditFlashcardModal();
+    }
 
     const handleAddEditFlashcard = async () => {
         if (question && answer && selectedCategory) {
@@ -54,12 +70,26 @@ const AddEditFlashcardModal = ({
                         category: selectedCategory
                     });
 
-                    setQuestion("");
-                    setAnswer("");
-                    setSelectedCategory("");
-                    closeAddEditFlashcardModal();
+                    clearAddEditFlashcardModal();
                     
                     setHandleDataOperation("add");
+                } catch (error) {
+                    console.log('Erro ao buscar as categorias.');
+                }
+            }
+
+            if (operation === "edit") {
+                try {
+                    await updateFlashcard({
+                        id: flashcard?.id,
+                        question,
+                        answer,
+                        category: selectedCategory
+                    });
+
+                    clearAddEditFlashcardModal();
+                    
+                    setHandleDataOperation("update");
                 } catch (error) {
                     console.log('Erro ao buscar as categorias.');
                 }

@@ -36,3 +36,11 @@ export async function createFlashcard(newFlashcard: Flashcard) {
     console.log("Error", error);
   }
 }
+
+export async function updateFlashcard(flashcard: Flashcard) {
+  try {
+    await api.put(`flashcards/${flashcard.id}`, flashcard);
+  } catch (error) {
+    console.log("Error", error);
+  }
+}

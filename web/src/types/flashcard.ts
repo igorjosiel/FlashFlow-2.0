@@ -1,5 +1,5 @@
 export type Flashcard = {
-  id: string;
+  id?: string;
   question: string;
   answer: string;
   category: string;

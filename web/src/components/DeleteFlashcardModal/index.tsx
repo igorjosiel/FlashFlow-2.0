@@ -23,7 +23,7 @@ const DeleteFlashCardModal= ({
 
     if (isOpen) {
         return (
-            <div className=" fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-111 bg-white p-8 rounded-2xl">
+            <div className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-111 bg-white p-8 rounded-2xl">
                 <div className="h-16 w-16 rounded-full bg-wine-red-light m-auto flex justify-center items-center">
                     <FaRegTrashCan size={20} color="#9E3F4E" />
                 </div>
@@ -43,8 +43,11 @@ const DeleteFlashCardModal= ({
                     >
                         Cancelar
                     </button>
-                    <button onClick={handleDeleteFlashcard} className="bg-wine-red text-white py-4 rounded-full font-manrope w-[50%] font-bold text-[14px] leading-5
-                        hover:cursor-pointer hover:opacity-90">
+                    <button
+                        onClick={handleDeleteFlashcard}
+                        className="bg-wine-red text-white py-4 rounded-full font-manrope w-[50%] font-bold text-[14px] leading-5
+                        hover:cursor-pointer hover:opacity-90"
+                    >
                         Excluir
                     </button>
                 </div>

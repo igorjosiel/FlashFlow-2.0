@@ -4,6 +4,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import type { Flashcard } from "../../types/flashcard";
 import DeleteFlashCardModal from "../DeleteFlashcardModal";
+import AddEditFlashcardModal from "../AddEditFlashcardModal";
 
 interface IFlashcardsContent {
     flashcards: Flashcard[] | [];
@@ -12,6 +13,7 @@ interface IFlashcardsContent {
 
 function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsContent) {
     const [flippedId, setFlippedId] = useState<number | null>(null);
+    const [isOpenAddEditFlashcardModal, setIsOpenAddEditFlashcardModal] = useState<boolean>(false);
     const [isOpenDeleteFlashcardModal, setIsOpenDeleteFlashcardModal] = useState<boolean>(false);
 
     const handleFlipCard = (id: number) => {
@@ -93,13 +95,24 @@ function FlashcardsContent({ flashcards, setHandleDataOperation }: IFlashcardsCo
             <li key={flashcards.length + 1} className="bg-surface-light-100 max-h-80 flex flex-col rounded-2xl px-8 py-21 text-center 
             shadow-[0px_10px_30px_0px_rgba(42,52,57,0.12)] border-2 border-surface-light-700 border-dashed">
                 <div className="bg-surface-light-700 h-16 w-16 rounded-full flex justify-center items-center mb-4 ml-auto mr-auto cursor-pointer">
-                    <FaPlus size={30} color="#566166" />
+                    <FaPlus
+                        size={30}
+                        color="#566166"
+                        onClick={() => setIsOpenAddEditFlashcardModal(true)}
+                    />
                 </div>
 
                 <h3 className="font-manrope font-bold text-[18px] leading-7 text-surface-light-400">Criar novo card</h3>
                 <p className="font-inter font-normal text-[12px] leading-4 text-surface-light-400">
                     Adicione um novo desafio à sua biblioteca e mantenha o ritmo.
                 </p>
+
+                <AddEditFlashcardModal
+                    isOpen={isOpenAddEditFlashcardModal}
+                    closeAddEditFlashcardModal={() => setIsOpenAddEditFlashcardModal(false)}
+                    operation="add"
+                    setHandleDataOperation={setHandleDataOperation}
+                />
             </li>
         );
     }

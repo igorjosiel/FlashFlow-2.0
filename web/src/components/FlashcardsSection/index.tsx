@@ -6,12 +6,16 @@ import type { Flashcard } from "../../types/flashcard";
 
 export interface IFlashcardsSection {
     selectedCategory: string;
+    handleDataOperation: string;
+    setHandleDataOperation: (operation: "add" | "update" | "delete" | "") => void;
 }
 
-function FlashcardsSection({ selectedCategory }: IFlashcardsSection) {
+function FlashcardsSection({
+    selectedCategory,
+    handleDataOperation,
+    setHandleDataOperation
+}: IFlashcardsSection) {
     const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
-    // Estado utilizado para renderizar novamente o componente atualizado dos flashcards
-    const [handleDataOperation, setHandleDataOperation] = useState<"add" | "update" | "delete" | "">("");
 
     useEffect(() => {
         async function fetchFlashcards() {

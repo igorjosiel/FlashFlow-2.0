@@ -54,7 +54,11 @@ const AddEditFlashcardModal = ({
                         category: selectedCategory
                     });
 
+                    setQuestion("");
+                    setAnswer("");
+                    setSelectedCategory("");
                     closeAddEditFlashcardModal();
+                    
                     setHandleDataOperation("add");
                 } catch (error) {
                     console.log('Erro ao buscar as categorias.');
@@ -65,7 +69,7 @@ const AddEditFlashcardModal = ({
 
     if (isOpen) {
         return (
-            <div className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-130 bg-white p-8 rounded-2xl">
+            <div className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-130 bg-white p-8 rounded-2xl z-50">
                 <h2 className="font-manrope font-extrabold text-[24px] leading-8 text-surface-dark text-left">
                     Criar Flashcard
                 </h2>

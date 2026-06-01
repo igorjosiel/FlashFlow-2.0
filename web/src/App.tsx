@@ -6,18 +6,19 @@ import FlashcardsSection from "./components/FlashcardsSection";
 
 function App() {
   const [selectedCategory, setSelectedCategory] = useState("");
-  // Estado utilizado para renderizar novamente o componente atualizado dos flashcards
+  // Estado utilizado para renderizar novamente o componente atualizando dos flashcards
   const [handleDataOperation, setHandleDataOperation] = useState<"add" | "update" | "delete" | "">("");
 
   return (
     <Layout>
       <Header setHandleDataOperation={setHandleDataOperation} />
 
-      <main>
+      <main className="h-screen">
         <FilterSection
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
         />
+
         <FlashcardsSection
           selectedCategory={selectedCategory}
           handleDataOperation={handleDataOperation}

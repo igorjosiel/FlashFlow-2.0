@@ -1,73 +1,251 @@
-# React + TypeScript + Vite
+# 🎴 Flash Flow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma aplicação web desenvolvida com **React**, **TypeScript**, **Vite** e **Tailwind CSS** para gerenciamento de flashcards.
 
-Currently, two official plugins are available:
+A aplicação consome uma API REST responsável pelo armazenamento dos dados e permite criar, visualizar, editar, remover e filtrar flashcards por categoria.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🚀 Tecnologias
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+![React](https://img.shields.io/badge/React-19.2.6-61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-6.0.2-3178C6)
+![Vite](https://img.shields.io/badge/Vite-8.0.12-646CFF)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4.3.0-06B6D4)
+![Axios](https://img.shields.io/badge/Axios-1.16.1-5A29E4)
+![Clsx](https://img.shields.io/badge/Clsx-2.1.1-black)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# 📖 Sobre o Projeto
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+O Flash Flow Web é uma interface moderna para gerenciamento de flashcards.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+A aplicação foi construída consumindo uma API REST e possui funcionalidades para:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* 📋 Listar flashcards
+* ➕ Criar novos flashcards
+* ✏️ Editar flashcards existentes
+* 🗑️ Remover flashcards
+* 🏷️ Filtrar flashcards por categoria
+
+---
+
+# ✨ Funcionalidades
+
+### Gerenciamento de Flashcards
+
+* Visualização de todos os flashcards cadastrados
+* Cadastro de novos flashcards
+* Atualização de flashcards existentes
+* Exclusão de flashcards
+* Atualização automática da interface após operações
+
+### Categorias
+
+* Carregamento das categorias diretamente da API
+* Filtro dos flashcards por categoria
+
+### Interface
+
+* Componentes reutilizáveis
+* Modais para interação com o usuário
+* Layout responsivo
+* Estilização moderna utilizando Tailwind CSS
+
+---
+
+# 🏗️ Estrutura do Projeto
+
+```text
+src/
+│
+├── assets/
+│   └── imagens do projeto
+│
+├── components/
+│   ├── Button
+│   ├── Textarea
+│   ├── Modals
+│   └── demais componentes reutilizáveis
+│
+├── services/
+│   ├── api.ts
+│   ├── flashcards.ts
+│   └── categories.ts
+│
+├── types/
+│
+├── App.tsx
+└── main.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# 🎨 Componentização
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+A aplicação utiliza uma pasta dedicada para componentes reutilizáveis.
+
+Exemplos:
+
+* Button
+* Textarea
+* Modal de criação / edição
+* Modal de confirmação de exclusão
+
+Essa abordagem facilita:
+
+* Reutilização de código
+* Manutenção
+* Escalabilidade do projeto
+* Consistência visual
+
+---
+
+# 🔌 Integração com API
+
+A comunicação com o backend é realizada através do Axios.
+
+Foi criada uma instância compartilhada para centralizar configurações da API.
+
+Exemplo:
+
+```typescript
+import axios from 'axios';
+
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL
+});
 ```
+
+---
+
+# 📂 Services
+
+A pasta `services` concentra todas as chamadas para a API.
+
+### Flashcards
+
+Responsável pelas operações:
+
+* Buscar flashcards
+* Criar flashcards
+* Atualizar flashcards
+* Remover flashcards
+
+### Categories
+
+Responsável por:
+
+* Buscar todas as categorias disponíveis
+
+---
+
+# ⚙️ Variáveis de Ambiente
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
+VITE_API_URL=http://localhost:3000
+```
+
+---
+
+# 📦 Instalação
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/igorjosiel/FlashFlow-2.0.git
+```
+
+Entre na pasta:
+
+```bash
+cd web/
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+---
+
+# ▶️ Executando o Projeto
+
+Modo desenvolvimento:
+
+```bash
+npm run dev
+```
+
+Script utilizado:
+
+```json
+{
+  "dev": "vite"
+}
+```
+
+A aplicação estará disponível em:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# 🏗️ Build de Produção
+
+Gerar build otimizada:
+
+```bash
+npm run build
+```
+
+Script utilizado:
+
+```json
+{
+  "build": "tsc -b && vite build"
+}
+```
+
+Os arquivos finais serão gerados na pasta:
+
+```text
+dist/
+```
+
+---
+
+# 🎨 Estilização
+
+A aplicação utiliza:
+
+### Tailwind CSS 4
+
+Para construção rápida e consistente da interface.
+
+### Clsx
+
+Para composição condicional de classes CSS.
+
+Exemplo:
+
+```typescript
+import clsx from 'clsx';
+
+const buttonClass = clsx(
+  'rounded-lg px-4 py-2',
+  isActive && 'bg-primary text-white'
+);
+```
+
+---
+
+# 👨‍💻 Autor
+
+Projeto desenvolvido com React, TypeScript, Vite e Tailwind CSS para prática de desenvolvimento frontend moderno e integração com APIs REST.
